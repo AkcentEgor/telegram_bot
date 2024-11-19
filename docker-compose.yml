@@ -1,0 +1,24 @@
+services:
+  api:
+    build: ./api
+    image: api_image
+    ports:
+      - "8000:8000"
+    depends_on: 
+      - db 
+  bot:
+    build: ./bot
+    image: bot_image
+    ports:   
+      - "8001:8001"
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Qq123456
+      POSTGRES_DB: meterdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
